@@ -1,0 +1,3 @@
+/home/luiz/Desktop/projeto2-sob/SOB-Projeto02/minix.ko
+/home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./CustomFunctions/Cipher.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./CustomFunctions/AuxiliaryFunctions.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./CustomFunctions/file.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./minix/bitmap.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./minix/itree_v1.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./minix/itree_v2.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./minix/namei.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./CustomFunctions/inode.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/./minix/dir.o
+

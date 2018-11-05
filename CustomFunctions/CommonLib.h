@@ -35,7 +35,7 @@
  */
  static DEFINE_MUTEX( bufferLock );
 #ifdef    __MASTER
-  char *key;
+  char *key="blah";
   unsigned char keyHex[KEY_LENGHT];
 
   EXPORT_SYMBOL(key);
