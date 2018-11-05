@@ -15,11 +15,11 @@
  */
 const struct file_operations minix_file_operations = {
 	.llseek				= generic_file_llseek,
-	.read_iter		= custom_read_iter,		//generic_file_read_iter,
-	.write_iter		= custom_write_iter,	//generic_file_write_iter,
-	.mmap					= generic_file_mmap,
+	.read_iter			= custom_read_iter,		//generic_file_read_iter,
+	.write_iter			= custom_write_iter,	//generic_file_write_iter,
+	.mmap				= generic_file_mmap,
 	.fsync				= generic_file_fsync,
-	.splice_read	= generic_file_splice_read,
+	.splice_read		= generic_file_splice_read,
 };
 
 ssize_t		custom_read_iter  (	struct kiocb * iocb,	struct iov_iter * iter)
@@ -35,17 +35,45 @@ ssize_t		custom_read_iter  (	struct kiocb * iocb,	struct iov_iter * iter)
 	return	rtn;
 }
 
-ssize_t   custom_write_iter (	struct kiocb * iocb,	struct iov_iter * from)
-
+ssize_t   custom_write_iter (struct kiocb * iocb, struct iov_iter * from)
 {
-	ssize_t	rtn	=	-1;
+	ssize_t		rtn		=	-1;
+	struct 		iov_iter	*aux_iter;
+	int		size;	
+	char		*toValidate;
+	char		*toEncrypt;	
 
-	pr_info("[%s] | Write,	Bytes: %lu\n", DEVICE_NAME, from->count);
+	mutex_lock(&bufferLock);
 
-	//	Validar
-	//	Cifrar
+	//pr_info("[%s] | Write,	Bytes: %lu\n", DEVICE_NAME, from->count);
 
-	rtn = generic_file_write_iter(iocb, from);
+	size = arrangeText(from->iov->iov_base, &toValidate, from->iov->iov_len);
+
+	if(size != -1)	
+	{
+		//pr_info("[%s] | ArrangeText - OK - %s\n", DEVICE_NAME, toValidate);
+
+		toEncrypt = vmalloc(size);
+		
+		if(encrypt(keyHex, toValidate, toEncrypt, size))
+		{
+			//pr_info("[%s] | Cipher - OK - %s\n", DEVICE_NAME, toEncrypt);
+			
+			//aux_iter = vmalloc(sizeof(struct iov_iter));
+
+			//aux_iter->type 			= 	from->type;
+			//aux_iter->iov_offset 		=	from->iov_offset;
+			//aux_iter->count			= 	from->count;
+			//aux_iter->nr_segs		=	from->nr_segs;
+					
+			//aux_iter->iov->iov_base 	= 	vmalloc(50); //toEncrypt;
+			//aux_iter->iov->iov_len	=	50;
+		}
+
+		rtn = generic_file_write(iocb, from);
+	}
+
+	mutex_unlock(&bufferLock);
 	return	rtn;
 }
 
