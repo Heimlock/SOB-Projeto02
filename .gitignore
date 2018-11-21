@@ -1,0 +1,16 @@
+*
+!*.sh
+!*.md
+!Makefile
+!.gitignore
+
+!minix/
+minix/*
+!minix/*.c
+!minix/*.h
+!minix/Kconfig
+
+!CustomFunctions/
+CustomFunctions/*
+!CustomFunctions/*.c
+!CustomFunctions/*.h

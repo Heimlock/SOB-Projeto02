@@ -1,1 +1,0 @@
-cmd_/home/luiz/Desktop/projeto2-sob/SOB-Projeto02/minix.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/minix.ko /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/minix.o /home/luiz/Desktop/projeto2-sob/SOB-Projeto02/minix.mod.o ;  true
