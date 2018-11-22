@@ -25,14 +25,21 @@ const struct file_operations minix_file_operations = {
 ssize_t		custom_read_iter  (	struct kiocb * iocb,	struct iov_iter * iter)
 {
 	ssize_t	rtn	=	-1;
+	int		size;
+	char	*toDecrypt;	
 
 	pr_info("[%s] | Read,	iter->count: %lu\n", DEVICE_NAME, iter->count);
 
 	rtn = generic_file_read_iter(iocb, iter);
 
-	//	Decifrar
+	toDecrypt = vmalloc(size);
 
-	return	rtn;
+	if(decrypt(keyHex, rtn, toDecrypt, size))
+	{
+		//Imprimir texto decriptado
+	}
+	
+	return	toDecrypt;
 }
 
 ssize_t   custom_write_iter (struct kiocb * iocb, struct iov_iter * from)
