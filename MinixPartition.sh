@@ -6,8 +6,6 @@ BLK_SIZE="1k"
 BLK_COUNT=10000
 LOOP_DEV="/dev/loop1"
 
-# clear & clear
-
 ####################
 ##    General     ##
 ####################
@@ -55,6 +53,7 @@ new_img()
 
 mount()
 {
+    sudo umount $LOOP_DEV
     sudo losetup $LOOP_DEV ./$IMAGENAME
     sudo mount -t minix $LOOP_DEV $MOUNT_DIR
     sudo chmod a+rwx $MOUNT_DIR

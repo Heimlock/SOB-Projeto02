@@ -5,7 +5,7 @@
 obj-m += minix.o
 CFLAGS_minix.o :=	-DDEBUG
 
-minix-objs := ./CustomFunctions/Cipher.o ./CustomFunctions/AuxiliaryFunctions.o ./CustomFunctions/file.o  ./minix/bitmap.o ./minix/itree_v1.o ./minix/itree_v2.o ./minix/namei.o ./CustomFunctions/inode.o ./minix/dir.o
+minix-objs := ./CustomFunctions/Cipher.o ./CustomFunctions/AuxiliaryFunctions.o ./CustomFunctions/file.o ./CustomFunctions/inode.o ./minix/bitmap.o ./minix/itree_v1.o ./minix/itree_v2.o ./minix/namei.o ./minix/dir.o
 
 all:
 	clear

@@ -97,24 +97,25 @@ static void init_once(void *foo)
 
 static int __init init_inodecache(void)
 {
-		int   i;
-		char  *keyBuffer =  NULL;
-	//modifie to set validet key
-	printk("============================================================\n");
+	char  *keyBuffer =  NULL;
+
+	// Modified to Validate Key
+	printk("=======================================================================\n");
 	pr_info("[%s] | Initializated\n", DEVICE_NAME);
 	if( validate( key, &keyBuffer, (2 * KEY_LENGHT) ) != 0 )
 	{
-			pr_err( "[%s] | ERROR! validate Function\n", DEVICE_NAME);
-			memset( keyHex, 0, KEY_LENGHT );
+		pr_err( "[%s] | ERROR! validate Function\n", DEVICE_NAME);
+		memset( keyHex, 0, KEY_LENGHT );
 	}
 	else
 	{
-			deserialize( keyBuffer, keyHex, (2 * KEY_LENGHT) );
-			vfree( keyBuffer );
+		deserialize( keyBuffer, keyHex, (2 * KEY_LENGHT) );
+		vfree( keyBuffer );
 	}
 	printHex( keyHex, KEY_LENGHT, "Key Received......" );
+	printk("=======================================================================\n");
+	// End of Modification
 
-	
 	minix_inode_cachep = kmem_cache_create("minix_inode_cache",
 					     sizeof(struct minix_inode_info),
 					     0, (SLAB_RECLAIM_ACCOUNT|

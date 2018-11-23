@@ -1,8 +1,10 @@
 *
 !*.sh
 !*.md
+!*.txt
 !Makefile
 !.gitignore
+copy.sh
 
 !minix/
 minix/*

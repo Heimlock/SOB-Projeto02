@@ -24,63 +24,39 @@ const struct file_operations minix_file_operations = {
 
 ssize_t		custom_read_iter  (	struct kiocb * iocb,	struct iov_iter * iter)
 {
-	ssize_t	rtn	=	-1;
-	int		size;
-	char	*toDecrypt;	
-
-	pr_info("[%s] | Read,	iter->count: %lu\n", DEVICE_NAME, iter->count);
+	ssize_t	rtn         =	-1;
+	ssize_t	cipherSize;
 
 	rtn = generic_file_read_iter(iocb, iter);
+	cipherSize  = (rtn - (rtn % KEY_LENGHT));
 
-	toDecrypt = vmalloc(size);
+	if( rtn == 0 )	return rtn;
 
-	if(decrypt(keyHex, rtn, toDecrypt, size))
+	pr_info("[%s] | Read, Bytes: %lu\n", DEVICE_NAME, rtn );
+
+	//	Decifrar
+	if( decrypt( keyHex, (char *)iter->iov[0].iov_base, (char *)iter->iov[0].iov_base, cipherSize ) < 0 )
 	{
-		//Imprimir texto decriptado
+		pr_err( "[%s] | ERROR! decrypt Function\n", DEVICE_NAME);
 	}
-	
-	return	toDecrypt;
+
+	return	rtn;
 }
 
 ssize_t   custom_write_iter (struct kiocb * iocb, struct iov_iter * from)
 {
-	ssize_t		rtn		=	-1;
-	struct 		iov_iter	*aux_iter;
-	int		size;	
-	char		*toValidate;
-	char		*toEncrypt;	
+	ssize_t	rtn         =	-1;
+	ssize_t cipherSize  = (from->iov[0].iov_len - (from->iov[0].iov_len % KEY_LENGHT));
 
-	mutex_lock(&bufferLock);
+	pr_info("[%s] | Write, Bytes: %lu\n", DEVICE_NAME, from->count );
 
-	//pr_info("[%s] | Write,	Bytes: %lu\n", DEVICE_NAME, from->count);
-
-	size = arrangeText(from->iov->iov_base, &toValidate, from->iov->iov_len);
-
-	if(size != -1)	
+	//	Cifrar
+	if( encrypt( keyHex, (char *)from->iov[0].iov_base, (char *)from->iov[0].iov_base, cipherSize ) < 0 )
 	{
-		//pr_info("[%s] | ArrangeText - OK - %s\n", DEVICE_NAME, toValidate);
-
-		toEncrypt = vmalloc(size);
-		
-		if(encrypt(keyHex, toValidate, toEncrypt, size))
-		{
-			//pr_info("[%s] | Cipher - OK - %s\n", DEVICE_NAME, toEncrypt);
-			
-			//aux_iter = vmalloc(sizeof(struct iov_iter));
-
-			//aux_iter->type 			= 	from->type;
-			//aux_iter->iov_offset 		=	from->iov_offset;
-			//aux_iter->count			= 	from->count;
-			//aux_iter->nr_segs		=	from->nr_segs;
-					
-			//aux_iter->iov->iov_base 	= 	vmalloc(50); //toEncrypt;
-			//aux_iter->iov->iov_len	=	50;
-		}
-
-		rtn = generic_file_write(iocb, from);
+		pr_err( "[%s] | ERROR! encrypt Function\n", DEVICE_NAME);
 	}
 
-	mutex_unlock(&bufferLock);
+	rtn = generic_file_write_iter(iocb, from);
 	return	rtn;
 }
 
