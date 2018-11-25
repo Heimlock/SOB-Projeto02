@@ -1,5 +1,19 @@
 #!/bin/bash
 
+ #
+ #		Sistemas Operacionais B
+ #		Projeto 02 - Minix Cifrado
+ #
+ #	Integrantes:
+ #		Bruno Pereira Bannwart        RA: 15171572
+ #		Felipe Moreira Ferreira       RA: 16116469
+ #		Luiz Felipe Zerbetto Masson   RA: 15166804
+ #		Matheus Manganeli de Macedo   RA: 16250276
+ #		Rodrigo da Silva Cardoso      RA: 16430126
+ #
+ #	 Testes Automáticos
+ #
+
 MODULE="./minix.ko"
 PROGNAMELEN=`expr ${#MODULE} - 5`
 MODULE_NAME=${MODULE:2:$PROGNAMELEN}
@@ -16,16 +30,13 @@ init()
       clear
   fi
 
-  if [ -e $MINIX_PART ]
-  then
+  if [ -e $MINIX_PART ]; then
   {
-    sudo umount loop1
     sudo ./MinixPartition.sh "-m"
     rmModule
   }
   else
   {
-    sudo umount loop1
     sudo ./MinixPartition.sh "-n"
     rmModule
   }
@@ -37,6 +48,12 @@ init()
   fi
 }
 
+ #
+ #  insmod
+ #    Função que Insere o $MODULE com uma dada Chave Criptográfica
+ #  Argumentos:
+ #    $1  ==  Chave Criptográfica
+ #
 insModule()
 {
   printf  "\n\tInserting Module with key='$1'\n"
@@ -44,12 +61,23 @@ insModule()
   sudo ./MinixPartition.sh "-m"
 }
 
+ #
+ #  rmModule
+ #    Função que Remove o $MODULE
+ #
 rmModule()
 {
   sudo ./MinixPartition.sh "-u"
   sudo rmmod $MODULE_NAME
 }
 
+ #
+ #  copyFile
+ #    Função que Copia Arquivo(s)
+ #  Argumentos:
+ #    $1  ==  Path do Arquivo Original
+ #    $2  ==  Path Destino
+ #
 copyFile()
 {
   ORIG=$1
@@ -57,21 +85,30 @@ copyFile()
   cp $ORIG $DEST
 }
 
+ #
+ #  readFile
+ #    Função que Lê um dado Arquivo
+ #  Argumentos:
+ #    $1  ==  Path do Arquivo
+ #
 readFile()
 {
-  FILE=$1
-  printf  "\tRead  from $1: "
+  printf  "\tRead  from $1: \n"
   cat $1
 }
 
+ #
+ #  writeFile
+ #    Função que Escreve Dados em um Arquivo
+ #  Argumentos:
+ #    $1  ==  Path do Arquivo
+ #    $2  ==  Dados
+ #
 writeFile()
 {
-  FILE=$1
-  DATA=$2
   printf  "\tWrite into $1\n"
   echo $2 >$1
 }
-
 
 init
 printf  "\n\n================================================================================\n\n"

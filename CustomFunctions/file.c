@@ -1,10 +1,16 @@
-// SPDX-License-Identifier: GPL-2.0
+
 /*
- *  linux/fs/minix/file.c
+ *		Sistemas Operacionais B
+ *		Projeto 02 - Minix Cifrado
  *
- *  Copyright (C) 1991, 1992 Linus Torvalds
+ *	Integrantes:
+ *		Bruno Pereira Bannwart        RA: 15171572
+ *		Felipe Moreira Ferreira       RA: 16116469
+ *		Luiz Felipe Zerbetto Masson   RA: 15166804
+ *		Matheus Manganeli de Macedo   RA: 16250276
+ *		Rodrigo da Silva Cardoso      RA: 16430126
  *
- *  minix regular file handling primitives
+ *	 File Operations
  */
 
 #include "../minix/minix.h"

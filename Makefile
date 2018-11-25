@@ -15,5 +15,6 @@ all:
 	@rm -f *.mod.c *.mod.o *.o
 
 clean:
+	sudo rm -R .tmp_versions .cache.mk
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-	rm -f other/ioctl other/cat_noblock *.plist test_cryptomodule
+	rm -f other/ioctl other/cat_noblock *.plist

@@ -1,13 +1,16 @@
+
 /*
- *  linux/fs/minix/inode.c
+ *		Sistemas Operacionais B
+ *		Projeto 02 - Minix Cifrado
  *
- *  Copyright (C) 1991, 1992  Linus Torvalds
+ *	Integrantes:
+ *		Bruno Pereira Bannwart        RA: 15171572
+ *		Felipe Moreira Ferreira       RA: 16116469
+ *		Luiz Felipe Zerbetto Masson   RA: 15166804
+ *		Matheus Manganeli de Macedo   RA: 16250276
+ *		Rodrigo da Silva Cardoso      RA: 16430126
  *
- *  Copyright (C) 1996  Gertjan van Wingerde
- *	Minix V2 fs support.
- *
- *  Modified for 680x0 by Andreas Schwab
- *  Updated to filesystem version 4 by Luiz Felipe Z. Masson
+ *	 FileSystem Support
  */
 
 #include <linux/module.h>
@@ -20,7 +23,6 @@
 #include <linux/writeback.h>
 
 #define __MASTER
-
 #include "../minix/minix.h"
 
 
@@ -97,25 +99,6 @@ static void init_once(void *foo)
 
 static int __init init_inodecache(void)
 {
-	char  *keyBuffer =  NULL;
-
-	// Modified to Validate Key
-	printk("=======================================================================\n");
-	pr_info("[%s] | Initializated\n", DEVICE_NAME);
-	if( validate( key, &keyBuffer, (2 * KEY_LENGHT) ) != 0 )
-	{
-		pr_err( "[%s] | ERROR! validate Function\n", DEVICE_NAME);
-		memset( keyHex, 0, KEY_LENGHT );
-	}
-	else
-	{
-		deserialize( keyBuffer, keyHex, (2 * KEY_LENGHT) );
-		vfree( keyBuffer );
-	}
-	printHex( keyHex, KEY_LENGHT, "Key Received......" );
-	printk("=======================================================================\n");
-	// End of Modification
-
 	minix_inode_cachep = kmem_cache_create("minix_inode_cache",
 					     sizeof(struct minix_inode_info),
 					     0, (SLAB_RECLAIM_ACCOUNT|
@@ -695,6 +678,24 @@ MODULE_ALIAS_FS("minix");
 
 static int __init init_minix_fs(void)
 {
+	// Modified to Validate Key
+	char  *keyBuffer =  NULL;
+	printk("=======================================================================\n");
+	pr_info("[%s] | Initializated\n", DEVICE_NAME);
+	if( validate( key, &keyBuffer, (2 * KEY_LENGHT) ) != 0 )
+	{
+		pr_err( "[%s] | ERROR! validate Function\n", DEVICE_NAME);
+		memset( keyHex, 0, KEY_LENGHT );
+	}
+	else
+	{
+		deserialize( keyBuffer, keyHex, (2 * KEY_LENGHT) );
+		vfree( keyBuffer );
+	}
+	printHex( keyHex, KEY_LENGHT, "Key Received......" );
+	printk("=======================================================================\n");
+	// End of Modification
+
 	int err = init_inodecache();
 	if (err)
 		goto out1;
