@@ -3,10 +3,8 @@
 IMAGENAME="minix.img"
 MOUNT_DIR="./file"
 BLK_SIZE="1k"
-BLK_COUNT=10000
+BLK_COUNT=20000
 LOOP_DEV="/dev/loop1"
-
-# clear & clear
 
 ####################
 ##    General     ##
@@ -19,6 +17,7 @@ help()
     echo    "-m         ==  Mounts the Partition"
     echo    "-u         ==  Demounts the Partition"
     echo    "-n         ==  Creates a New Partition"
+    echo    "-c         ==  Clean Files"
     echo    "-h         ==  Show this Message"
 }
 
@@ -34,6 +33,9 @@ switch()
     "-n")
         new_img
         ;;
+    "-c")
+        clean
+        ;;
     *)
         help
         ;;
@@ -47,7 +49,7 @@ new_img()
 {
     dd if=/dev/zero of=$IMAGENAME bs=$BLK_SIZE count=$BLK_COUNT
     sudo mkdir $MOUNT_DIR
-    sudo mkfs.minix $LOOP_DEV
+    sudo losetup $LOOP_DEV ./$IMAGENAME
     sudo mkfs.minix $LOOP_DEV
     sudo mount -t minix $LOOP_DEV $MOUNT_DIR
     sudo chmod a+rwx $MOUNT_DIR
@@ -55,6 +57,7 @@ new_img()
 
 mount()
 {
+    sudo umount $LOOP_DEV
     sudo losetup $LOOP_DEV ./$IMAGENAME
     sudo mount -t minix $LOOP_DEV $MOUNT_DIR
     sudo chmod a+rwx $MOUNT_DIR
@@ -64,8 +67,13 @@ mount()
 umount()
 {
   sudo umount  $MOUNT_DIR
-  # sudo umount  $LOOP_DEV
   printf  "\t$IMAGENAME Demounted\n"
+}
+
+clean()
+{
+  sudo rm -R $MOUNT_DIR
+  sudo rm ./$IMAGENAME
 }
 
 main()

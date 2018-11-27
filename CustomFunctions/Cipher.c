@@ -1,14 +1,14 @@
 
 /*
  *		Sistemas Operacionais B
- *		Projeto 01 - Módulo Criptográfico
+ *		Projeto 02 - Minix Cifrado
  *
  *	Integrantes:
- *		Bruno Pereira Bannwart 				RA: 15171572
- *		Felipe Moreira Ferreira 		 	RA: 16116469
- *		Luiz Felipe Zerbetto Masson 	RA: 15166804
- *		Matheus Manganeli de Macedo 	RA: 16250276
- *		Rodrigo da Silva Cardoso 			RA: 16430126
+ *		Bruno Pereira Bannwart        RA: 15171572
+ *		Felipe Moreira Ferreira       RA: 16116469
+ *		Luiz Felipe Zerbetto Masson   RA: 15166804
+ *		Matheus Manganeli de Macedo   RA: 16250276
+ *		Rodrigo da Silva Cardoso      RA: 16430126
  *
  *	 Operações de Cifragem e Decifragem
  */
@@ -19,6 +19,14 @@ MODULE_AUTHOR("Felipe Ferreira");
 MODULE_DESCRIPTION("Cipher Operations");
 MODULE_LICENSE("GPL");
 
+/*
+ *  Função que Encripta um dado Conjunto de Bytes
+ *  Argumentos:
+ *    @key      ==    Chave Criptográfica
+ *    @input    ==    Array de Bytes a Serem Cifrados
+ *    @output   ==    Array de Bytes Cifrados
+ *    @size     ==    Tamanho do Array de Bytes
+ */
 int   encrypt( u8 key[], char input[], char output[], size_t size )
 {
     int     rtn   = 0;
@@ -110,6 +118,14 @@ int   encrypt( u8 key[], char input[], char output[], size_t size )
     return rtn;
 }
 
+/*
+ *  Função que Decripta um dado Conjunto de Bytes
+ *  Argumentos:
+ *    @key      ==    Chave Criptográfica
+ *    @input    ==    Array de Bytes a Serem Decifrados
+ *    @output   ==    Array de Bytes Decifrados
+ *    @size     ==    Tamanho do Array de Bytes
+ */
 int   decrypt( u8 key[], char input[], char output[], size_t size )
 {
     int     rtn   = 0;

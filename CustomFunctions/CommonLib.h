@@ -1,4 +1,18 @@
 
+/*
+ *		Sistemas Operacionais B
+ *		Projeto 02 - Minix Cifrado
+ *
+ *	Integrantes:
+ *		Bruno Pereira Bannwart        RA: 15171572
+ *		Felipe Moreira Ferreira       RA: 16116469
+ *		Luiz Felipe Zerbetto Masson   RA: 15166804
+ *		Matheus Manganeli de Macedo   RA: 16250276
+ *		Rodrigo da Silva Cardoso      RA: 16430126
+ *
+ *	 Biblioteca de Recursos Comuns
+ */
+
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wunused-function"
 
@@ -33,10 +47,9 @@
 /*
  * Global Variables
  */
- static DEFINE_MUTEX( bufferLock );
 #ifdef    __MASTER
-  char *key;
-  unsigned char keyHex[KEY_LENGHT];
+  char          *key="01234567890123456789012345678912";
+  unsigned char  keyHex[KEY_LENGHT];
 
   EXPORT_SYMBOL(key);
   EXPORT_SYMBOL(keyHex);

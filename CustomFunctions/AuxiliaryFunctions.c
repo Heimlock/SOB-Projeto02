@@ -1,14 +1,14 @@
 
 /*
  *		Sistemas Operacionais B
- *		Projeto 01 - Módulo Criptográfico
+ *		Projeto 02 - Minix Cifrado
  *
  *	Integrantes:
- *		Bruno Pereira Bannwart 				RA: 15171572
- *		Felipe Moreira Ferreira 		 	RA: 16116469
- *		Luiz Felipe Zerbetto Masson 	RA: 15166804
- *		Matheus Manganeli de Macedo 	RA: 16250276
- *		Rodrigo da Silva Cardoso 			RA: 16430126
+ *		Bruno Pereira Bannwart        RA: 15171572
+ *		Felipe Moreira Ferreira       RA: 16116469
+ *		Luiz Felipe Zerbetto Masson   RA: 15166804
+ *		Matheus Manganeli de Macedo   RA: 16250276
+ *		Rodrigo da Silva Cardoso      RA: 16430126
  *
  *	 Operações Auxiliares
  */
