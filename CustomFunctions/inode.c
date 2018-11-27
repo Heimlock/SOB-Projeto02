@@ -678,6 +678,7 @@ MODULE_ALIAS_FS("minix");
 
 static int __init init_minix_fs(void)
 {
+	int err;
 	// Modified to Validate Key
 	char  *keyBuffer =  NULL;
 	printk("=======================================================================\n");
@@ -696,7 +697,7 @@ static int __init init_minix_fs(void)
 	printk("=======================================================================\n");
 	// End of Modification
 
-	int err = init_inodecache();
+	err = init_inodecache();
 	if (err)
 		goto out1;
 	err = register_filesystem(&minix_fs_type);
